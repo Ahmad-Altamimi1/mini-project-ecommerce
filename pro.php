@@ -16,7 +16,7 @@
       <!-- bootstrap css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <link rel="stylesheet" type="text/css" href="css/styless.css">
       <!-- Responsive-->
       <link rel="stylesheet" href="css/responsive2.css">
       <!-- fevicon -->
@@ -67,7 +67,7 @@ session_start();
                            <li><a href="previwe.php" style="color:#f2515e"><?php echo  $_SESSION["username"]; ?></a></li>
                            <li><a href="previwe.php"><img src="images/user-icon.png"></a></li>
                            <li><a href="#"><img src="images/trolly-icon.png"></a></li>
-                                                    <li><a href="mainpage.php" style="color:#ff1111">Log Out</a></li>
+                                                    <li><a href="index.php" style="color:#ff1111">Log Out</a></li>
 
                         </ul>
                      </div>
@@ -158,7 +158,12 @@ session_start();
 
          <label for="price">price:</label>
 
-         <input type="text" name="price" id="price" required>
+         <input type="text" name="price" id="price" required placeholder="ex:12,00JD">
+         <!-- date  -->
+         <label for="">Date:</label>
+         <input type="date" name="date" id="date"> <br><br>    
+         <label for="">is active</label>
+         <input type="checkbox" name="checkbox" id="checkbox">  <br><br>
    <!-- PIC  -->
 
          <label for="">prodact Image:</label><label for="product-image" class="custom-file-upload"> Choose File
@@ -185,17 +190,25 @@ if (isset($_POST["add"])) {
    $name =$_POST["name"];
    $price =$_POST["price"];
    $des =$_POST["des"];
+        if ($_POST["checkbox"]===null) {
+   $_POST["checkbox"]="off";
+   $checkbox =$_POST["checkbox"];
+
+   }else{
+   $_POST["checkbox"]="on";
+   $checkbox =$_POST["checkbox"];
+
+   }
+   $date =$_POST["date"];
 $add=$_POST["add"];
 $pic = $_FILES["product-image"]["name"];
         $tempName = $_FILES["product-image"]["tmp_name"];
 $diroctery="image/";
 $file= $diroctery . basename($pic);
-trim($file);
         move_uploaded_file($tempName, $file);
 
 
-  
-   $card=[$name ,$price,$des,$file];
+   $card=[$name ,$price,$des, $file ,$date, $checkbox ];
 
    $check = true;
         foreach ($_SESSION["card"] as $value) {
@@ -207,7 +220,7 @@ trim($file);
         if ($check) {
 
         
-           $card=[$name ,$price,$des,$file];
+           $card=[$name ,$price,$des,$file,$date, $checkbox];
            array_push( $_SESSION["card"] ,$card);}
 
    
@@ -219,8 +232,9 @@ if (isset($_POST["delet"])) {
     // print_r($_POST["delet"]);
     
    }
+  
    if ($_SESSION["card"] ==null) {
-   echo " <div class='warning'>no thing to show!!!</div> ";
+   echo " <div class='warning'>Nothing to show!!!</div> ";
 }else{
 echo '<div class="container " style="padding-top: 40px; ">';
 echo "<table class=' table table-striped table-hover table-bordered  ' style='text-align: center;'>";
@@ -231,10 +245,13 @@ echo <<< "th"
 <th scope="col">Description</th>
 <th scope="col">Image</th> 
 <th scope="col" style="padding:0"> </th>
+<th>Date </th>
+<th> Is Active</th>
 </tr>
 th;
-
+// print_r($_SESSION["card"]);
    foreach ($_SESSION["card"] as $key => $value) {
+  
    echo <<<"table"
    <tr scope="row">
 
@@ -248,6 +265,8 @@ th;
                 <input type="submit" value="Delete"  style="color: white; width:100% ; background: #ff0909;   margin: 0 ;">
             </form>
         </td>
+        <td> $value[4]</td>
+        <td> $value[5]</td>
    </tr>
    table;
 }
@@ -314,10 +333,7 @@ echo "</div>";
                      <h3 class="company_text">Company</h3>
                      <p class="dolor_text">Al_Tamimi </p>
                   </div>
-                  <!-- <div class="col-lg-3 col-md-6">
-                     <h3 class="company_text">MY ACCOUNT</h3>
-                     <p class="dolor_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.Lorem ipsum dolor sit amet, </p>
-                  </div> -->
+           
                </div>
             </div>
          </div>
