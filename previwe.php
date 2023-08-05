@@ -16,7 +16,7 @@
       <!-- bootstrap css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <link rel="stylesheet" type="text/css" href="css/styless.css">
       <link rel="stylesheet" type="text/css" href="css/previwe.css">
       <!-- Responsive-->
       <link rel="stylesheet" href="css/responsive1.css">
@@ -68,7 +68,7 @@ session_start();
                            <li><a href="#" style="color:#f2515e"><?php echo  $_SESSION["username"]; ?></a></li>
                            <li><a href="#"><img src="images/user-icon.png"></a></li>
                            <li><a href="#"><img src="images/trolly-icon.png"></a></li>
-                           <li><a href="mainpage.php" style="color:#ff1111">Log Out</a></li>
+                           <li><a href="index.php" style="color:#ff1111">Log Out</a></li>
                         </ul>
                      </div>
                   </form>
@@ -86,7 +86,7 @@ session_start();
 if (($_SESSION["card"]==null)) {
 echo " <div class='warning1' > 
 <img src='images/warning-stamp-1-1024x650-1.webp' style='width: 15%;'>
-<span class='warning'>NO any thing to show!!!</span> </div>";
+<span class='warning'>Nothing to show!!!</span> </div>";
 }else{
 echo "<h2 style='text-align:center' class='warning'> your proudact in our web site</h2>";
 echo "<div id='pre' class='container'>";
@@ -97,11 +97,18 @@ foreach ($_SESSION["card"] as  $value) {
     <div class="card-content">
       <div class="card-title"> Name:$value[0]</div>
       <div class="card-description"> Description :$value[2]</div>
-      <div class="card-price"> price :$value[1] JD</div></div></div>
+      <div class="card-price"> price :$value[1] </div>
+     <div>Date: $value[4]</div>
    cart;
-  
+  if (!($value[5]=="on")) {
+ echo "<div style='color:red'> Solid Out</div>";
+  }else{
+ echo "<div style='color:green'> On stock</div>";
+
+  }
+  echo "</div> </div> ";
 }
-echo "</div>";
+echo "</div> ";
 }
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
